@@ -82,7 +82,7 @@ I am only putting in 10 out of the 4527 stolen car data on my github for sake of
 
 ## Analysis Q&A
 
-**1. Which dates were vehicles most stolen, and least stolen, limit 5**
+**1. Which dates had the most vehicles stolen and least vehicles stolen? Limit 5**
 ```sql
 select date, 
 count(*) as frequency
@@ -106,7 +106,7 @@ limit 5;
 April 6th, 2022 had the least cars stolen in a day with just 7.
 
 
-## What type of vehicles most and least often stolen, limit 3?
+**2. Which types of vehicles are most and least often stolen? Limit 3.**
 ```SQL
 select type,
 Count(*) as often 
@@ -131,9 +131,87 @@ limit 3;
 
 The least 3 stolen cars are the Articulated Truck, Special Purpose Vehicles, and Trail Bikes.
 
+**3. Does the type of vehicle stolen vary by region?**
+- This question requires an inner join to combine the location and stolen cars table.
+```sql
+select l.region, s.type,
+count(*) AS total_stolen
+FROM stolen as s
+INNER JOIN locations l
+ON s.location_id = l.location_id
+GROUP BY l.region, s.type
+order by region asc;
+```
+<img width="345" height="132" alt="image" src="https://github.com/user-attachments/assets/eaeb7ad5-6457-4c4b-98ae-9c7cda4c7ab8" />
+I ordered the data by region in alphabetical order so it would be easier to see which types of cars were most stolen in each region of New Zealand. 
+
+These were the most stolen types by region: 
+
+| Region              | Vehicle Type   | Total |
+|---------------------|----------------|-------|
+| Auckland            | Saloon         | 327   |
+| Bay of Plenty       | Utility        | 100   |
+| Canterbury          | Stationwagon   | 165   |
+| Gisborne            | Saloon         | 41    |
+| Hawkes Bay          | Trailer        | 23    |
+| Manawatū-Whanganui  | Stationwagon   | 29    |
+| Nelson              | Trailer        | 19    |
+| Northland           | Stationwagon   | 69    |
+| Otago               | Stationwagon   | 31    |
+| Southland           | Stationwagon   | 9     |
+| Taranaki            | Stationwagon   | 23    |
+| Waikato             | Saloon         | 80    |
+| Wellington          | Stationwagon   | 92    |
 
 
-## Hot Spot Maps
+**4. What type of vehicle is stolen in the most dense region?**
+```sql
+select s.type, l.region, l.density,
+count(*) as total_stolen
+from stolen s
+inner join locations l
+on s.location_id = l.location_id
+group by s. type, l.region, l.density
+order by total_stolen desc
+limit 1;
+```
+<img width="367" height="46" alt="image" src="https://github.com/user-attachments/assets/28c1c589-d476-40b0-a7da-e5dec98bbd28" />
+This query pulled the most dense region, Auckland, with a total of 327 Saloon type cars stolen.
+
+**5. Which region has the most and least cars stolen?**
+```sql
+select l.region,
+count(*) as total_stolen
+from stolen as s
+inner join locations l
+on s.location_id=l.location_id
+group by l.region
+order by total_stolen desc
+limit 1;
+```
+<img width="215" height="47" alt="image" src="https://github.com/user-attachments/assets/d9c92728-e51b-4583-afb2-7fae84c65c3a" />
+Auckland has the most cars stolen with a total of 1,626. 
+
+```sql
+select l.region,
+count(*) as total_stolen
+from stolen as s
+inner join locations l
+on s.location_id = l.location_id
+group by l.region
+order by total_stolen asc 
+limit 1;
+```
+<img width="217" height="43" alt="image" src="https://github.com/user-attachments/assets/2abf6abc-fa96-4b9e-8995-a50c4af62b25" />
+
+Southland has the least cars stolen with 26.
+
+## Hot Spot Maps: Google Data Studio
+Mapping of stolen cars total by region:
+<img width="1066" height="707" alt="image" src="https://github.com/user-attachments/assets/3ce7ce95-1772-440d-bbec-94bde2991ec2" />
+
+Mapping of region by population data:
+<img width="1112" height="721" alt="image" src="https://github.com/user-attachments/assets/4303f80a-e4d5-44f4-8876-252efa73fdc5" />
 
 
 
