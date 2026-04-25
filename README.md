@@ -48,7 +48,7 @@ I used a formula in the next available empty column in both my location data spr
 ```sql
 insert into locations VALUES
 (101,'Northland','New Zealand', 201500, 16.11),
-(102,'Auckland',	'New Zealand',	1695200, 343.09),
+(102,'Auckland','New Zealand',	1695200, 343.09),
 (103,'Waikato','New Zealand',513800,21.5),
 (104,'Bay of Plenty','New Zealand',347700,28.8),
 (105,'Gisborne','New Zealand',52100,6.21),
