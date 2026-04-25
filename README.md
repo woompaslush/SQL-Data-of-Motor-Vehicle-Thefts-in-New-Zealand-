@@ -80,6 +80,60 @@ insert into stolen values
 I am only putting in 10 out of the 4527 stolen car data on my github for sake of space. But I did input the entire data into my database. 
 
 
+## Analysis Q&A
+
+**1. Which dates were vehicles most stolen, and least stolen, limit 5**
+```sql
+select date, 
+count(*) as frequency
+from stolen 
+group by date
+order by frequency desc
+limit 5;
+```
+<img width="199" height="102" alt="image" src="https://github.com/user-attachments/assets/53e7b761-ea0d-4362-bb8f-2b9d4372a29d" />
+April 4th, 2022 had the most cars stolen in a day with 81. 
+
+```sql
+select date, 
+count(*) as frequency
+from stolen
+group by date
+order by frequency asc
+limit 5;
+```
+<img width="197" height="101" alt="image" src="https://github.com/user-attachments/assets/a82f5513-489b-4901-a4f2-b6443048c307" />
+April 6th, 2022 had the least cars stolen in a day with just 7.
+
+
+## What type of vehicles most and least often stolen, limit 3?
+```SQL
+select type,
+Count(*) as often 
+from stolen 
+group by type
+order by often desc
+limit 3;
+```
+<img width="176" height="70" alt="image" src="https://github.com/user-attachments/assets/3c1f2074-e987-4af0-8975-db2d19b13cc2" />
+
+The top 3 stolen cars are the Stationwagon, Saloon, and Hatchback.
+
+```sql
+select type, 
+count(*) as lessoften
+from stolen 
+group by type 
+order by lessoften asc
+limit 3;
+```
+<img width="226" height="77" alt="image" src="https://github.com/user-attachments/assets/690117c3-a3df-4a43-8985-e0d2b8606f7f" />
+
+The least 3 stolen cars are the Articulated Truck, Special Purpose Vehicles, and Trail Bikes.
+
+
+
+## Hot Spot Maps
 
 
 
